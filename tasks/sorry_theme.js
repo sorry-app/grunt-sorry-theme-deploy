@@ -13,38 +13,64 @@ module.exports = function(grunt) {
   // Please see the Grunt documentation for more information regarding task
   // creation: http://gruntjs.com/creating-tasks
 
+  // Include the temporary dir lib.
+  var tmp = require('temporary');
+
+  // Archiver and compression utilities.
+  var fs = require('fs');
+  var archiver = require('archiver');
+
+  // Register the task.
   grunt.registerMultiTask('sorry_theme', 'A grunt task to automate the deployment of your status page themes to your Sorry account.', function() {
-    // Merge task-specific and/or target-specific options with these defaults.
-    var options = this.options({
-      punctuation: '.',
-      separator: ', '
+
+    // Force task into async mode and grab a handle to the "done" function.
+    var done = this.async();
+
+    // Create a file to use for the archive.
+    var archive_path = new tmp.Dir().path + 'theme.zip';
+
+    // On error handler.
+    var on_archive_error = function(err) {
+      // Log the error which has happened.
+      grunt.log.error(err);
+      // Fail the task with the warning.
+      grunt.fail.warn('Error when archiving your theme.');
+    };
+
+    // Create an output stream for the file to be written to.
+    var output = fs.createWriteStream(archive_path);
+
+    // Callback for when the output stream is closed.
+    output.on('close', function() {
+      // Log that the stream is closed.
+      grunt.log.ok('Bundled theme ready for deployment (' + String(archive_path).cyan + ')');
+
+      // Complete the task.
+      done();
     });
 
-    // Iterate over all specified file groups.
-    this.files.forEach(function(f) {
-      // Concat specified files.
-      var src = f.src.filter(function(filepath) {
-        // Warn on and remove invalid source files (if nonull was set).
-        if (!grunt.file.exists(filepath)) {
-          grunt.log.warn('Source file "' + filepath + '" not found.');
-          return false;
-        } else {
-          return true;
-        }
-      }).map(function(filepath) {
-        // Read file source.
-        return grunt.file.read(filepath);
-      }).join(grunt.util.normalizelf(options.separator));
+    // Callback for when archiving fails.
+    output.on('error', on_archive_error);
 
-      // Handle options.
-      src += options.punctuation;
+    // Create a new archiver class for a zip file.
+    var archive = archiver('zip');
 
-      // Write the destination file.
-      grunt.file.write(f.dest, src);
+    // Callback for when archiving fails.
+    archive.on('error', on_archive_error);
 
-      // Print a success message.
-      grunt.log.writeln('File "' + f.dest + '" created.');
-    });
+    // Connect the output stream.
+    archive.pipe(output);
+
+    // Bulk add all the source files to the archive.
+    archive.bulk([{
+      expand: true, 
+      cwd: 'tasks/', 
+      src: ['**/*']
+    }]);
+
+    // Finallize the archive ready for creation.
+    archive.finalize();    
+
   });
 
 };

@@ -32,19 +32,17 @@ module.exports = function(grunt) {
     sorry_theme: {
       default_options: {
         options: {
-        },
-        files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
+          username: 'my-username',
+          password: 'my-password',
+          page_id: 'my-page-id'          
+        }
       },
       custom_options: {
         options: {
-          separator: ': ',
-          punctuation: ' !!!',
-        },
-        files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123'],
-        },
+          username: 'my-username',
+          password: 'my-password',
+          page_id: 'my-page-id'
+        }
       },
     },
 

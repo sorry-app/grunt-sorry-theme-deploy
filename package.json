@@ -1,0 +1,41 @@
+{
+  "name": "grunt-sorry-theme",
+  "description": "A grunt task to automate the deployment of your status page themes to your Sorry account.",
+  "version": "0.1.0",
+  "homepage": "https://github.com/supporttime/grunt-sorry-theme",
+  "author": {
+    "name": "Robert Rawlins",
+    "email": "robert@weboffins.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/supporttime/grunt-sorry-theme.git"
+  },
+  "bugs": {
+    "url": "https://github.com/supporttime/grunt-sorry-theme/issues"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/supporttime/grunt-sorry-theme/blob/master/LICENSE-MIT"
+    }
+  ],
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt": "~0.4.4"
+  },
+  "peerDependencies": {
+    "grunt": "~0.4.4"
+  },
+  "keywords": [
+    "gruntplugin"
+  ]
+}

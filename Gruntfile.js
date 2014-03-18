@@ -32,9 +32,12 @@ module.exports = function(grunt) {
     sorry_theme: {
       default_options: {
         options: {
-          username: 'my-username',
-          password: 'my-password',
-          page_id: 'my-page-id'          
+          username: 'robert@weboffins.com',
+          password: 'plokijuh5',
+          page_id: 'my-first-status-page',
+          source: 'test/fixtures/theme/',
+          host: 'api.lvh.me',
+          port: 3000
         }
       },
       custom_options: {

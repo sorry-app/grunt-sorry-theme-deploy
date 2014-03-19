@@ -34,21 +34,21 @@ module.exports = function(grunt) {
 
     // Configuration to be run (and then tested).
     sorry_theme: {
-      default_options: {
+      options: {
+        username: '<%= sorry.username %>',
+        password: '<%= sorry.password %>',
+        page_id: 'my-first-status-page'
+      },     
+      valid_theme: {
         options: {
-          username: '<%= sorry.username %>',
-          password: '<%= sorry.password %>',
-          page_id: 'my-first-status-page',
-          source: 'test/fixtures/theme/',
+          source: 'test/fixtures/theme/'
         }
       },
-      custom_options: {
+      invalid_theme: {
         options: {
-          username: '<%= sorry.username %>',
-          password: '<%= sorry.password %>',
-          page_id: 'my-page-id'
+          source: 'test/fixtures/invalid_theme/'
         }
-      },
+      }
     },
 
     // Unit tests.

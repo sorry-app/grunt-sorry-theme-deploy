@@ -19,39 +19,42 @@ exports.init = function (grunt, options) {
 
 	    // If no error occurs and it confirms the file exists.
 	    } else if (stats.isFile()) {
-	      // Log that we're about to start the uplading.
-	      grunt.log.writeln('Uploading your theme: ' + archive_path);
-
 	      // HTTP request
 	      rest.request(api_endpoint, {
 	        // Stadard multipart HTTP POST to the api.
 	        method: 'PUT',
 	        multipart: true,
+	        parser: rest.parsers.json,
 	        data: {
 	          // Attach the zipfile we've just created.
 	          zip: rest.file(archive_path, null, stats.size, null, 'application/zip')
 	        }
-	      // Callback once the upload is complete.
-	      }).on('complete', function(data, response) {
-	        // Check the response code of the request for various outcomes.
-	        // TODO: Cope with 404 for wrong page id's.
-	        // TODO: Cope with 401 for wrong authentication details.
-	        // TODO: Cope with JSON validation error collection output
-	        // TODO: Cope when no connect could be made, is complete task best option?
-	        if (response.statusCode === 200) {
-	          // Upload was succesfull.
-	          // Log that things were a success.
-	          grunt.log.ok('Upload successful of:' + archive_path);
-	        } else {
-	          // The upload was not a success.
-	          // Fail gracefully with some error information.
-	          // TODO: Log more details about the request, so we can see a stack trace etc if one exists.
-	          grunt.fail.warn('Failed uploading:' + archive_path + '(status code: ' + response.statusCode + ')');
-	        }
+			// Callback once the upload is complete.
+			}).on('200', function(data, response) {
+				// Upload was succesfull.
+				// Log that things were a success.
+				grunt.log.ok('Theme successfully deployed to "' + options.page_id + '"');
 
-	        // Run the callback method.
-	        callback();
-	      });
+			}).on('422', function(data, response) {
+				// Append all of the validation messages to grunt errors.
+				// Loop over the error messages collection.
+				grunt.util._.each(data.messages, function(value, key) {
+					// Loop over the messages for each key.
+					grunt.util._.each(value, function(message) {
+						// Log the error message with grunt.
+						grunt.log.warn(message);
+					});
+				});
+				// The upload was not a success.
+				// Fail gracefully with some error information.
+				grunt.fail.warn('The uploaded theme did not appear to be valid.');
+
+			}).on('complete', function(data, response) {
+				// The upload attempt for better or works is now complete.
+		        // Run the callback method.
+		        callback();
+
+			});
 	    }
 	  });
 	};

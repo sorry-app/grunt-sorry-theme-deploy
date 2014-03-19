@@ -21,7 +21,7 @@ exports.init = function (grunt, options) {
 		// Callback for when the output stream is closed.
 		output.on('close', function() {
 			// Log that the stream is closed.
-			grunt.log.ok('Bundled theme ready for deployment (' + String(options.destination).cyan + ')');
+			grunt.log.ok('Bundled theme ready for deployment (' + options.destination + ')');
 
 			// Run the callback.
 			callback(options.destination);

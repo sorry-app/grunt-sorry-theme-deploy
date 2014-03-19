@@ -51,6 +51,11 @@ exports.init = function (grunt, options) {
 				// Fail gracefully with some error information.
 				grunt.fail.fatal( data.error_description ? data.error_description : data.error );
 
+			}).on('404', function(err, request) {
+				// The upload was not a success.
+				// Fail gracefully with some error information.
+				grunt.fail.warn('We could not find a page on this account by the name "' + options.page_id + '"');
+
 			}).on('error', function(err, request) {
 				// The upload was not a success.
 				// Fail gracefully with some error information.

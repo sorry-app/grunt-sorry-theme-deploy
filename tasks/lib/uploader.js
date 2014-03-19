@@ -24,7 +24,6 @@ exports.init = function (grunt, options) {
 	        // Stadard multipart HTTP POST to the api.
 	        method: 'PUT',
 	        multipart: true,
-	        parser: rest.parsers.json,
 	        data: {
 	          // Attach the zipfile we've just created.
 	          zip: rest.file(archive_path, null, stats.size, null, 'application/zip')
@@ -47,9 +46,17 @@ exports.init = function (grunt, options) {
 					});
 				});
 
+				console.log(data);
 				// The upload was not a success.
 				// Fail gracefully with some error information.
-				grunt.fail.fatal('The uploaded theme did not appear to be valid.');
+				grunt.fail.fatal(data.error_description);
+
+			}).on('error', function(err, request) {
+
+				console.log(err);
+				// The upload was not a success.
+				// Fail gracefully with some error information.
+				grunt.fail.fatal(err);
 
 			}).on('complete', function(data, response) {
 				// The upload attempt for better or works is now complete.

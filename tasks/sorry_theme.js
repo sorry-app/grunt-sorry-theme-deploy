@@ -30,6 +30,9 @@ module.exports = function(grunt) {
     // Default configuration options.
     // TODO: Don't describe these here - have the task fail if they are not defined.
     var options = this.options({
+      // Default login credentials pulled from environment variables.
+      username: process.env.SORRY_USERNAME,
+      password: process.env.SORRY_PASSWORD,
       // Default path for the theme is in the src directory.
       source: 'src/',
       // Default api endpoint is on the production environment.

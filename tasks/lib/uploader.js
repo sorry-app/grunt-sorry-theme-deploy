@@ -3,30 +3,16 @@ var fs = require('fs');
 var rest = require('restler');
 
 // Initialize the uploader class.
-exports.init = function (grunt) {
-
-	// Create a collection of exported methods.
-	var exports = {
-		// Export an options collection which can be overwritten.
-		// This is where we set the default options for the uploader.
-		options: {
-	      // Default login credentials pulled from environment variables.
-	      username: process.env.SORRY_USERNAME,
-	      password: process.env.SORRY_PASSWORD,
-	      // Default api endpoint is on the production environment.
-	      host: 'api.sorryapp.com',
-	      post: 80
-		}
-	};
+exports.init = function (grunt, options) {
 
     // Method to get the API endpoint.
     var api_endpoint = function () {
       // Compile the endpoint from the options.
-      return 'http://' + exports.options.username + ':' + exports.options.password + '@' + exports.options.host + ':' + exports.options.port + '/1/pages/' + exports.options.page_id + '/theme';
+      return 'http://' + options.username + ':' + options.password + '@' + options.host + ':' + options.port + '/1/pages/' + options.page_id + '/theme';
     };
 
 	// Upload the theme to the API.
-	exports.upload = function (archive_path) {
+	exports.upload = function (archive_path, callback) {
 	  // Get file size (necessary for multipart upload)
 	  fs.stat(archive_path, function(err, stats) {
 	    // See if stating the file have any erros.
@@ -65,6 +51,9 @@ exports.init = function (grunt) {
 	          // TODO: Log more details about the request, so we can see a stack trace etc if one exists.
 	          grunt.fail.warn('Failed uploading:' + archive_path + '(status code: ' + response.statusCode + ')');
 	        }
+
+	        // Run the callback method.
+	        callback();
 	      });
 	    }
 	  });

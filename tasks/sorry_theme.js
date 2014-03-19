@@ -13,14 +13,8 @@ module.exports = function(grunt) {
   // Please see the Grunt documentation for more information regarding task
   // creation: http://gruntjs.com/creating-tasks
 
-  // Include the temporary dir lib.
-  var tmp = require('temporary');
-
-  // Archiver and compression utilities.
-  var fs = require('fs');
-  var archiver = require('archiver');
-  var rest = require('restler');
-  var uploader = require('./lib/uploader').init(grunt);
+  // Resolver for relative paths.
+  var path = require("path");
 
   // Register the task.
   grunt.registerMultiTask('sorry_theme', 'A grunt task to automate the deployment of your status page themes to your Sorry account.', function() {
@@ -28,60 +22,34 @@ module.exports = function(grunt) {
     // Force task into async mode and grab a handle to the "done" function.
     var done = this.async();
 
-    // Default configuration options.
-    // TODO: Don't describe these here - have the task fail if they are not defined.
-    var options = this.options({
+    // Configure the bundler library.
+    var bundler = require('./lib/bundler').init(grunt, this.options({
       // Default path for the theme is in the src directory.
       source: 'src/',
-    });
+      destination: path.resolve('dist/theme.zip')
+    }));
 
-    // Merge task options into the upload options.
-    uploader.options = this.options();
+    // Configure the uploader library.
+    var uploader = require('./lib/uploader').init(grunt, this.options({
+      // Default login credentials pulled from environment variables.
+      username: process.env.SORRY_USERNAME,
+      password: process.env.SORRY_PASSWORD,
 
-    // Create a file to use for the archive.
-    var archive_path = new tmp.Dir().path + 'theme.zip';
+      // Default api endpoint is on the production environment.
+      host: 'api.sorryapp.com',
+      post: 80      
+    }));
 
-    // On error handler.
-    var on_archive_error = function(err) {
-      // Log the error which has happened.
-      grunt.log.error(err);
-      // Fail the task with the warning.
-      grunt.fail.warn('Error when archiving your theme.');
-    };
-
-    // Create an output stream for the file to be written to.
-    var output = fs.createWriteStream(archive_path);
-
-    // Callback for when the output stream is closed.
-    output.on('close', function() {
-      // Log that the stream is closed.
-      grunt.log.ok('Bundled theme ready for deployment (' + String(archive_path).cyan + ')');
-
+    // Run the bundle and upload process.
+    // Start by asking the bundler to bundle the theme.
+    bundler.bundle(function(archive_path) {
+      // The bundler has completed bundling the theme.
       // Have the uploader upload the file.
-      uploader.upload(archive_path);
+      uploader.upload(archive_path, function() {
+        // The upload taskis complete.
+        done();
+      });
     });
-
-    // Callback for when archiving fails.
-    output.on('error', on_archive_error);
-
-    // Create a new archiver class for a zip file.
-    var archive = archiver('zip');
-
-    // Callback for when archiving fails.
-    archive.on('error', on_archive_error);
-
-    // Connect the output stream.
-    archive.pipe(output);
-
-    // Bulk add all the source files to the archive.
-    archive.bulk([{
-      expand: true, 
-      cwd: options.source,
-      src: ['**/*']
-    }]);
-
-    // Finallize the archive ready for creation.
-    archive.finalize();
 
   });
 

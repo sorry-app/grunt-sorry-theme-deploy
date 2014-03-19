@@ -40,8 +40,6 @@ module.exports = function(grunt) {
           password: '<%= sorry.password %>',
           page_id: 'my-first-status-page',
           source: 'test/fixtures/theme/',
-          host: 'api.lvh.me',
-          port: 3000
         }
       },
       custom_options: {

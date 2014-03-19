@@ -6,10 +6,7 @@ var rest = require('restler');
 exports.init = function (grunt, options) {
 
     // Method to get the API endpoint.
-    var api_endpoint = function () {
-      // Compile the endpoint from the options.
-      return 'http://' + options.username + ':' + options.password + '@' + options.host + ':' + options.port + '/1/pages/' + options.page_id + '/theme';
-    };
+    var api_endpoint = 'http://' + options.username + ':' + options.password + '@api.lvh.me:3000/1/pages/' + options.page_id + '/theme';
 
 	// Upload the theme to the API.
 	exports.upload = function (archive_path, callback) {
@@ -26,7 +23,7 @@ exports.init = function (grunt, options) {
 	      grunt.log.writeln('Uploading your theme: ' + archive_path);
 
 	      // HTTP request
-	      rest.request(api_endpoint(), {
+	      rest.request(api_endpoint, {
 	        // Stadard multipart HTTP POST to the api.
 	        method: 'PUT',
 	        multipart: true,

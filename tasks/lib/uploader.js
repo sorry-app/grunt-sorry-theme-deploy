@@ -24,6 +24,7 @@ exports.init = function (grunt, options) {
 	        // Stadard multipart HTTP POST to the api.
 	        method: 'PUT',
 	        multipart: true,
+	        parser: rest.parsers.json,
 	        data: {
 	          // Attach the zipfile we've just created.
 	          zip: rest.file(archive_path, null, stats.size, null, 'application/zip')
@@ -46,14 +47,11 @@ exports.init = function (grunt, options) {
 					});
 				});
 
-				console.log(data);
 				// The upload was not a success.
 				// Fail gracefully with some error information.
-				grunt.fail.fatal(data.error_description);
+				grunt.fail.fatal( data.error_description ? data.error_description : data.error );
 
 			}).on('error', function(err, request) {
-
-				console.log(err);
 				// The upload was not a success.
 				// Fail gracefully with some error information.
 				grunt.fail.fatal(err);

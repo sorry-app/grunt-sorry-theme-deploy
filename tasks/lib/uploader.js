@@ -56,6 +56,10 @@ exports.init = function (grunt, options) {
 				// Fail gracefully with some error information.
 				grunt.fail.fatal(err);
 
+			}).on('timeout', function(ms) {
+				// The upload timed out.
+				grunt.fail.fatal('The upload took too long and so has been stopped.');
+
 			}).on('complete', function(data, response) {
 				// The upload attempt for better or works is now complete.
 		        // Run the callback method.

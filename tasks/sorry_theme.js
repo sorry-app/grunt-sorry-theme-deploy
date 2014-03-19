@@ -51,7 +51,7 @@ module.exports = function(grunt) {
     // Method to get the API endpoint.
     var api_endpoint = function () {
       // Compile the endpoint from the options.
-      return 'http://' + options.username + ':' + options.password + '@' + options.host + ':' + options.port + '/1/pages/' + options.page_id + '/theme'
+      return 'http://' + options.username + ':' + options.password + '@' + options.host + ':' + options.port + '/1/pages/' + options.page_id + '/theme';
     };
 
     // Create an output stream for the file to be written to.
@@ -91,6 +91,7 @@ module.exports = function(grunt) {
             // TODO: Cope with 404 for wrong page id's.
             // TODO: Cope with 401 for wrong authentication details.
             // TODO: Cope with JSON validation error collection output
+            // TODO: Cope when no connect could be made, is complete task best option?
             if (response.statusCode === 200) {
               // Upload was succesfull.
               // Log that things were a success.

@@ -28,12 +28,16 @@ module.exports = function(grunt) {
       tests: ['tmp'],
     },
 
+    // Load in your sorry credentials.
+    // NOTE: NEVER CHECK YOUR CREDENTIALS INTO YOUR REPOSITORY.
+    sorry: grunt.file.readJSON('sorry.json'),
+
     // Configuration to be run (and then tested).
     sorry_theme: {
       default_options: {
         options: {
-          username: 'robert@weboffins.com',
-          password: 'plokijuh5',
+          username: '<%= sorry.username %>',
+          password: '<%= sorry.password %>',
           page_id: 'my-first-status-page',
           source: 'test/fixtures/theme/',
           host: 'api.lvh.me',
@@ -42,8 +46,8 @@ module.exports = function(grunt) {
       },
       custom_options: {
         options: {
-          username: 'my-username',
-          password: 'my-password',
+          username: '<%= sorry.username %>',
+          password: '<%= sorry.password %>',
           page_id: 'my-page-id'
         }
       },

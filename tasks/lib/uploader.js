@@ -36,7 +36,7 @@ exports.init = function (grunt, options) {
 				// Log that things were a success.
 				grunt.log.ok('Theme successfully deployed to "' + options.page_id + '"');
 
-			}).on('422', function(data, response) {
+			}).on('fail', function(data, response) {
 				// Append all of the validation messages to grunt errors.
 				// Loop over the error messages collection.
 				grunt.util._.each(data.messages, function(value, key) {
@@ -50,10 +50,6 @@ exports.init = function (grunt, options) {
 				// The upload was not a success.
 				// Fail gracefully with some error information.
 				grunt.fail.fatal('The uploaded theme did not appear to be valid.');
-
-			}).on('401', function(data, repsonse) {
-				// The upload was not a success due to authentication errors.
-				grunt.fail.fatal('Wrong username and password, please check and try again.');
 
 			}).on('complete', function(data, response) {
 				// The upload attempt for better or works is now complete.

@@ -29,8 +29,9 @@ exports.init = function (grunt, options) {
 	          // Attach the zipfile we've just created.
 	          zip: rest.file(archive_path, null, stats.size, null, 'application/zip')
 	        }
+
 			// Callback once the upload is complete.
-			}).on('200', function(data, response) {
+			}).on('success', function(data, response) {
 				// Upload was succesfull.
 				// Log that things were a success.
 				grunt.log.ok('Theme successfully deployed to "' + options.page_id + '"');
@@ -45,15 +46,19 @@ exports.init = function (grunt, options) {
 						grunt.log.warn(message);
 					});
 				});
+
 				// The upload was not a success.
 				// Fail gracefully with some error information.
-				grunt.fail.warn('The uploaded theme did not appear to be valid.');
+				grunt.fail.fatal('The uploaded theme did not appear to be valid.');
+
+			}).on('401', function(data, repsonse) {
+				// The upload was not a success due to authentication errors.
+				grunt.fail.fatal('Wrong username and password, please check and try again.');
 
 			}).on('complete', function(data, response) {
 				// The upload attempt for better or works is now complete.
 		        // Run the callback method.
 		        callback();
-
 			});
 	    }
 	  });

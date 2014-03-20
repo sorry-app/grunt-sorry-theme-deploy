@@ -1,6 +1,6 @@
 /*
- * grunt-sorry-theme
- * https://github.com/supporttime/grunt-sorry-theme
+ * grunt-sorry-theme-deploy
+ * https://github.com/supporttime/grunt-sorry-theme-deploy
  *
  * Copyright (c) 2014 Robert Rawlins
  * Licensed under the MIT license.

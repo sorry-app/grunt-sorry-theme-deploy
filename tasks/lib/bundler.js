@@ -1,6 +1,7 @@
 // Archiver and compression utilities.
 var fs = require('fs');
 var archiver = require('archiver');
+var path = require('path');
 
 // Initialize the uploader class.
 exports.init = function (grunt, options) {
@@ -14,41 +15,95 @@ exports.init = function (grunt, options) {
     };
 
 	// Upload the theme to the API.
-	exports.bundle = function(callback) {
-	    // Create an output stream for the file to be written to.
-	    var output = fs.createWriteStream(options.destination);
+	exports.bundle = function(files, callback) {
+		// Create an achiver instance to work with.
+	    var archive = archiver.create('zip');
+	    // Get a reference to the destination file.
+	    var dest = options.destination
 
-		// Callback for when the output stream is closed.
-		output.on('close', function() {
-			// Log that the stream is closed.
-			grunt.log.ok('Bundled theme ready for deployment (' + options.destination + ')');
+	    // Ensure dest folder exists
+	    grunt.file.mkdir(path.dirname(dest));
 
-			// Run the callback.
-			callback(options.destination);
-		});
+	    // Where to write the file
+	    var destStream = fs.createWriteStream(dest);
 
-	    // Callback for when archiving fails.
-	    output.on('error', on_archive_error);
+	    // Archive error handler.
+	    archive.on('error', function(err) {
+			// Log the error through grunt.
+			grunt.log.error(err);
+			// Fail the task.
+			grunt.fail.warn('Archiving failed.');
+	    });
 
-	    // Create a new archiver class for a zip file.
-	    var archive = archiver('zip');
+	    // Callback for when file added to the zip/
+	    archive.on('entry', function(file) {
+	    	// Log that we added the file to the achive.
+	      	grunt.verbose.writeln('Archived ' + file._srcFile.cyan + ' -> ' + String(dest).cyan + '/'.cyan + file.name.cyan);
+	    });
 
-	    // Callback for when archiving fails.
-	    archive.on('error', on_archive_error);
+	    // Callback for when writing the file errors.
+	    destStream.on('error', function(err) {
+			// Log the error.
+			grunt.log.error(err);
+			// Fail the task.
+			grunt.fail.warn('WriteStream failed.');
+	    });
 
-	    // Connect the output stream.
-	    archive.pipe(output);
+	    // Callback when the zip archive file is closed.
+	    destStream.on('close', function() {
+	    	// Log that the zip file is created.
+	      	grunt.log.writeln('Created ' + String(dest).cyan);
+	      	
+	      	// Run the callback.
+	      	callback(dest);
+	    });
 
-	    // Bulk add all the source files to the archive.
-	    archive.bulk([{
-	      expand: true, 
-	      cwd: options.source,
-	      src: ['**/*']
-	    }]);
+	    // Set the archiver output stream to the destination file.
+	    archive.pipe(destStream);
 
-	    // Finallize the archive ready for creation.
+	    // Loop over the collection of files passed in to be archived.
+	    files.forEach(function(file) {
+	    	// Check if the file is an expended pair.
+			var isExpandedPair = file.orig.expand || false;
+
+			// Look at the collection of files src path.
+			var src = file.src.filter(function(f) {
+				// Check that this is a file on the FS.
+				return grunt.file.isFile(f);
+			});
+
+			// Loop over the sources for this file entry.
+			src.forEach(function(srcFile) {
+				// Calculate the files name.
+				var internalFileName = (isExpandedPair) ? file.dest : exports.unixifyPath(path.join(file.dest || '', srcFile));
+				
+				// Set the files data including it's name and path.
+				var fileData = {
+					name: internalFileName,
+					_srcFile: srcFile
+				};
+
+				// Queue the file to be added to the archive.
+				archive.file(srcFile, fileData);
+			});
+	    });
+
+	    // Finallize the archive.
+	    // This kicks off the write process for the queued files.
 	    archive.finalize();
 	};
+
+	// Format paths so they work consistantly accross platforms.
+	exports.unixifyPath = function(filepath) {
+		// Check if this is a windows platform or unix.
+		if (process.platform === 'win32') {
+			// This is a windows platform, convert the slashes in the path.
+			return filepath.replace(/\\/g, '/');
+		} else {
+			// This is a unix platform, use the default path.
+			return filepath;
+		}
+	};	
 
 	// Return the classes exports.
 	return exports;

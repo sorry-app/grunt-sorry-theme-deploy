@@ -40,14 +40,14 @@ module.exports = function(grunt) {
         page_id: 'my-first-status-page'
       },     
       valid_theme: {
-        options: {
-          source: 'test/fixtures/theme/'
-        }
+        expand: true,
+        cwd: 'test/fixtures/theme/',
+        src: ['**/*']
       },
       invalid_theme: {
-        options: {
-          source: 'test/fixtures/invalid_theme/'
-        }
+        expand: true,
+        cwd: 'test/fixtures/invalid_theme/',
+        src: ['**/*']
       }
     },
 

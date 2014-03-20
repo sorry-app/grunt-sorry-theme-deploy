@@ -25,7 +25,6 @@ module.exports = function(grunt) {
     // Configure the bundler library.
     var bundler = require('./lib/bundler').init(grunt, this.options({
       // Default path for the theme is in the src directory.
-      source: 'src/',
       destination: path.resolve('dist/theme.zip')
     }));
 
@@ -38,7 +37,7 @@ module.exports = function(grunt) {
 
     // Run the bundle and upload process.
     // Start by asking the bundler to bundle the theme.
-    bundler.bundle(function(archive_path) {
+    bundler.bundle(this.files, function(archive_path) {
       // The bundler has completed bundling the theme.
       // Have the uploader upload the file.
       uploader.upload(archive_path, function() {

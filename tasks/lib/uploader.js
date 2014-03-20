@@ -6,12 +6,12 @@ var rest = require('restler');
 exports.init = function (grunt, options) {
 
     // Method to get the API endpoint.
-    var api_endpoint = 'http://' + options.username + ':' + options.password + '@api.lvh.me:3000/1/pages/' + options.page_id + '/theme';
+    var api_endpoint = 'http://' + options.username + ':' + options.password + '@api.lvh.me:3000/1/pages/' + options.page + '/theme';
 
 	// Upload the theme to the API.
 	exports.upload = function (archive_path, callback) {
 	  // Log that we're starting the deployment process.
-	  grunt.log.ok('Deploying theme to "' + options.page_id + '"');
+	  grunt.log.ok('Deploying theme to "' + options.page + '"');
 
       // HTTP request to upload the file to the api.
       rest.request(api_endpoint, {
@@ -30,7 +30,7 @@ exports.init = function (grunt, options) {
 		}).on('success', function(data, response) {
 			// Upload was succesfull.
 			// Log that things were a success.
-			grunt.log.ok('Theme successfully deployed to "' + options.page_id + '"');
+			grunt.log.ok('Theme successfully deployed to "' + options.page + '"');
 
 		}).on('fail', function(data, response) {
 			// Append all of the validation messages to grunt errors.

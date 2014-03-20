@@ -37,7 +37,7 @@ module.exports = function(grunt) {
       options: {
         username: '<%= sorry.username %>',
         password: '<%= sorry.password %>',
-        page_id: 'my-first-status-page'
+        page: 'my-first-status-page'
       },     
       valid_theme: {
         expand: true,

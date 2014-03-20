@@ -1,6 +1,8 @@
 # grunt-sorry-theme-deploy
 
 > A grunt task to automate the deployment of your status page themes to your Sorry account.
+>
+> This task takes your themes source code, bundles it up into a deployable zip and uploads it to your status page through the Sorry API.
 
 ## Getting Started
 This plugin requires Grunt `~0.4.4`
@@ -37,53 +39,71 @@ grunt.initConfig({
 
 ### Options
 
-#### options.separator
+#### options.username
 Type: `String`
-Default value: `',  '`
 
-A string value that is used to do something with whatever.
+This is your username/email address which you have registered to your Sorry account.
 
-#### options.punctuation
+#### options.password
 Type: `String`
-Default value: `'.'`
 
-A string value that is used to do something else with whatever else.
+This is the password to match your username/email address.
+
+#### options.destination
+Type: `String`
+Default Value: `/dist/theme.zip`
+
+This is the location in which we'll store the bundled version of your theme before uploading it.
+
+#### options.host
+Type: `String`
+Default Value: `https://api.sorryapp.com`
+
+This is only applicable to Sorry development staff who wish to point the script at development and staging servers instead of the production endpoint.
 
 ### Usage Examples
 
 #### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+
+This example demonstrates loading your Sorry login details from another file, Where `sorry.json` is just a json key:value file like package.json.
+
+**This is important because you should never check your Sorry credentials in to version control! Load them from an external file that is outside of the repo or excluded by .gitignore.**
 
 ```js
 grunt.initConfig({
-  sorry_theme_deploy: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
+
+    // Load in your sorry credentials.
+    // NOTE: NEVER CHECK YOUR CREDENTIALS INTO YOUR REPOSITORY.
+    sorry: grunt.file.readJSON('sorry.json'),
+
+    // Configuration to be run (and then tested).
+    sorry_theme_deploy: {
+      options: {
+        username: '<%= sorry.username %>',
+        password: '<%= sorry.password %>',
+        page: 'YOUR STATUS PAGE NAME GOES HERE',
+      },     
+      your_target: {
+        expand: true,
+        cwd: 'src/',
+        src: ['**/*']
+      },
+    }
+
 });
 ```
 
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
+You can also see from this config that we define the themes files as being in a directory named `src`. These files could be anywhere you like, but we always recommend this as a sensible default.
 
-```js
-grunt.initConfig({
-  sorry_theme_deploy: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
+### Alternative ways of including your Sorry credentials
+
+#### Environment variables
+
+If you do not pass in a **username** and **password** with your config, `grunt-sorry-theme-deploy` will fallback to the following environment variables:
+
+* `SORRY_USERNAME`
+* `SORRY_PASSWORD`
 
 ## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
-## Release History
-_(Nothing yet)_
+In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).

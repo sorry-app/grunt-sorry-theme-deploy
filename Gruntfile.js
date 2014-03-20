@@ -37,7 +37,8 @@ module.exports = function(grunt) {
       options: {
         username: '<%= sorry.username %>',
         password: '<%= sorry.password %>',
-        page: 'my-first-status-page'
+        page: 'my-first-status-page',
+        host: 'http://api.lvh.me:3000' // Development server host instead of the real API.
       },     
       valid_theme: {
         expand: true,

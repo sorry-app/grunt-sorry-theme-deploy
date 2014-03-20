@@ -6,7 +6,7 @@ var rest = require('restler');
 exports.init = function (grunt, options) {
 
     // Method to get the API endpoint.
-    var api_endpoint = 'http://api.lvh.me:3000/1/pages/' + options.page + '/theme';
+    var api_endpoint = options.host + '/1/pages/' + options.page + '/theme';
 
 	// Upload the theme to the API.
 	exports.upload = function (archive_path, callback) {

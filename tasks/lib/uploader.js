@@ -10,6 +10,9 @@ exports.init = function (grunt, options) {
 
 	// Upload the theme to the API.
 	exports.upload = function (archive_path, callback) {
+	  // Log that we're starting the deployment process.
+	  grunt.log.ok('Deploying theme to "' + options.page_id + '"');
+
       // HTTP request to upload the file to the api.
       rest.request(api_endpoint, {
         // Stadard multipart HTTP POST to the api.
@@ -51,7 +54,7 @@ exports.init = function (grunt, options) {
 
 		}).on('timeout', function(ms) {
 			// The upload timed out.
-			grunt.fail.fatal('The upload took too long and so has been stopped.');
+			grunt.fail.fatal('The deployment took too long and so has been stopped.');
 
 		}).on('complete', function(data, response) {
 			// The upload attempt for better or works is now complete.

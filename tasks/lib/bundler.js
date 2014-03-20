@@ -6,26 +6,21 @@ var path = require('path');
 // Initialize the uploader class.
 exports.init = function (grunt, options) {
 
-    // On error handler.
-    var on_archive_error = function(err) {
-      // Log the error which has happened.
-      grunt.log.error(err);
-      // Fail the task with the warning.
-      grunt.fail.warn('Error when archiving your theme.');
-    };
-
 	// Upload the theme to the API.
 	exports.bundle = function(files, callback) {
 		// Create an achiver instance to work with.
 	    var archive = archiver.create('zip');
 	    // Get a reference to the destination file.
-	    var dest = options.destination
+	    var dest = options.destination;
 
 	    // Ensure dest folder exists
 	    grunt.file.mkdir(path.dirname(dest));
 
 	    // Where to write the file
 	    var destStream = fs.createWriteStream(dest);
+
+		// Log that we're begining the bundling process.
+		grunt.log.ok('Bundling theme ready for deployment.');
 
 	    // Archive error handler.
 	    archive.on('error', function(err) {
@@ -38,7 +33,7 @@ exports.init = function (grunt, options) {
 	    // Callback for when file added to the zip/
 	    archive.on('entry', function(file) {
 	    	// Log that we added the file to the achive.
-	      	grunt.verbose.writeln('Archived ' + file._srcFile.cyan + ' -> ' + String(dest).cyan + '/'.cyan + file.name.cyan);
+	      	grunt.verbose.writeln('Added ' + file._srcFile + ' to theme bundle.');
 	    });
 
 	    // Callback for when writing the file errors.
@@ -52,7 +47,7 @@ exports.init = function (grunt, options) {
 	    // Callback when the zip archive file is closed.
 	    destStream.on('close', function() {
 	    	// Log that the zip file is created.
-	      	grunt.log.writeln('Created ' + String(dest).cyan);
+	      	grunt.log.ok('Theme bundling complete: ' + String(dest));
 	      	
 	      	// Run the callback.
 	      	callback(dest);

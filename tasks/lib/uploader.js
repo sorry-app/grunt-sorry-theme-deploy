@@ -6,7 +6,7 @@ var rest = require('restler');
 exports.init = function (grunt, options) {
 
     // Method to get the API endpoint.
-    var api_endpoint = 'http://' + options.username + ':' + options.password + '@api.lvh.me:3000/1/pages/' + options.page + '/theme';
+    var api_endpoint = 'http://api.lvh.me:3000/1/pages/' + options.page + '/theme';
 
 	// Upload the theme to the API.
 	exports.upload = function (archive_path, callback) {
@@ -19,6 +19,8 @@ exports.init = function (grunt, options) {
         method: 'PUT',
         multipart: true,
         parser: rest.parsers.json,
+        username: options.username,
+        password: options.password,
 
         // Data for the request.
         data: {

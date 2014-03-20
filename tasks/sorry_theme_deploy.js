@@ -17,7 +17,7 @@ module.exports = function(grunt) {
   var path = require("path");
 
   // Register the task.
-  grunt.registerMultiTask('sorry_theme', 'A grunt task to automate the deployment of your status page themes to your Sorry account.', function() {
+  grunt.registerMultiTask('sorry_theme_deploy', 'A grunt task to automate the deployment of your status page themes to your Sorry account.', function() {
 
     // Force task into async mode and grab a handle to the "done" function.
     var done = this.async();

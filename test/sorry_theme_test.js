@@ -22,7 +22,7 @@ var grunt = require('grunt');
     test.ifError(value)
 */
 
-exports.sorry_theme = {
+exports.sorry_theme_deploy = {
   setUp: function(done) {
     // setup here if necessary
     done();

@@ -33,7 +33,7 @@ module.exports = function(grunt) {
     sorry: grunt.file.readJSON('sorry.json'),
 
     // Configuration to be run (and then tested).
-    sorry_theme: {
+    sorry_theme_deploy: {
       options: {
         username: '<%= sorry.username %>',
         password: '<%= sorry.password %>',
@@ -70,7 +70,7 @@ module.exports = function(grunt) {
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'sorry_theme', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'sorry_theme_deploy', 'nodeunit']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test']);

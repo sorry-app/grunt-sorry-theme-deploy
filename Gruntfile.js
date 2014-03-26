@@ -36,10 +36,8 @@ module.exports = function(grunt) {
     sorry_theme_deploy: {
       options: {
         username: '<%= sorry.username %>',
-        password: '<%= sorry.password %>',
-        page: 'my-first-status-page',
-        host: 'http://api.lvh.me:3000' // Development server host instead of the real API.
-      },     
+        password: '<%= sorry.password %>'
+      },
       valid_theme: {
         expand: true,
         cwd: 'test/fixtures/theme/',

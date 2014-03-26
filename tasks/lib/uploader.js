@@ -6,7 +6,7 @@ var rest = require('restler');
 exports.init = function (grunt, options) {
 
     // Method to get the API endpoint.
-    var api_endpoint = (grunt.option('host') || 'https://api.sorryapp.com') + '/1/pages/' + (grunt.option('page') || options.page) + '/theme';
+    var api_endpoint = (grunt.option('sorry-host') || 'https://api.sorryapp.com') + '/1/pages/' + (grunt.option('sorry-page') || options.page) + '/theme';
 
 	// Upload the theme to the API.
 	exports.upload = function (archive_path, callback) {

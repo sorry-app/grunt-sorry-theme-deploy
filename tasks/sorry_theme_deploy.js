@@ -32,7 +32,9 @@ module.exports = function(grunt) {
     var uploader = require('./lib/uploader').init(grunt, this.options({
       // Default login credentials pulled from environment variables.
       username: process.env.SORRY_USERNAME,
-      password: process.env.SORRY_PASSWORD
+      password: process.env.SORRY_PASSWORD,
+      host: grunt.option('sorry-host') || 'https://api.sorryapp.com',
+      page: grunt.option('sorry-page')
     }));
 
     // Run the bundle and upload process.

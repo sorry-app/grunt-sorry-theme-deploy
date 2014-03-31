@@ -1,7 +1,7 @@
 {
   "name": "grunt-sorry-theme-deploy",
   "description": "A grunt task to automate the deployment of your status page themes to your Sorry account.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "homepage": "https://github.com/supporttime/grunt-sorry-theme-deploy",
   "author": {
     "name": "Robert Rawlins",

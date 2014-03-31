@@ -37,7 +37,7 @@ grunt.initConfig({
 });
 ```
 
-### Options
+### Options (Required)
 
 #### options.username
 Type: `String`
@@ -48,6 +48,13 @@ This is your username/email address which you have registered to your Sorry acco
 Type: `String`
 
 This is the password to match your username/email address.
+
+#### options.page
+Type: `String`
+
+This is ID of the page to which you wish to deploy your theme. You can find this in the address bar of your Sorry account when viewing your page. i.e. a URL of `http://app.sorryapp.com/pages/my-page` means your page ID is `my-page`.
+
+### Options (Optional)
 
 #### options.destination
 Type: `String`

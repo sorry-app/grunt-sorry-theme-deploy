@@ -57,7 +57,7 @@ This is the password to match your username/email address.
 #### options.page or `--sory-page`
 Type: `String`
 
-This is ID of the page to which you wish to deploy your theme. You can find this in the address bar of your Sorry account when viewing your page. i.e. a URL of `http://app.sorryapp.com/pages/my-page` means your page ID is `my-page`.
+The ID of the page to which you wish to deploy your theme. You can find this in the address bar of your Sorry account when viewing your page. i.e. a URL of `http://app.sorryapp.com/pages/my-page` means your page ID is `my-page`.
 
 ### Options (Optional)
 
@@ -88,7 +88,7 @@ We need somewhere to keep your Sorry login credentials. In the root of your proj
 }
 ```
 
-Now you can configure your grunt task, loading your Sorry login details the from external file you created above.
+Now you can configure your grunt task, loading your Sorry login details from the external file you created above.
 
 ```js
 grunt.initConfig({
@@ -117,9 +117,11 @@ You can also see from this config that we define the themes files as being in a 
 
 #### Running The Task
 
-Now your options are configured you can deploy your theme to your chosen page. Whist you can put your page into the configuration above, to allow you to deploy to multiple pages we suggest using the command line argument `--sorry-page`
+Now your options are configured you can deploy your theme to your chosen page. Whist you can define your target page in the configuration, to give you flexibility we suggest using the command line argument `--sorry-page`
 
-`grunt sorry-theme-deploy --sorry-page=my-page`
+```
+grunt sorry-theme-deploy --sorry-page=my-page
+```
 
 ### Alternative ways of including your Sorry credentials
 

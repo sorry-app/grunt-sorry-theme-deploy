@@ -87,8 +87,7 @@ grunt.initConfig({
     sorry_theme_deploy: {
       options: {
         username: '<%= sorry.username %>',
-        password: '<%= sorry.password %>',
-        page: 'YOUR STATUS PAGE NAME GOES HERE',
+        password: '<%= sorry.password %>'
       },     
       your_target: {
         expand: true,

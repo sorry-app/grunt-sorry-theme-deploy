@@ -3,3 +3,4 @@ npm-debug.log
 tmp
 sorry.json
 .DS_Store
+dist

@@ -23,7 +23,9 @@ grunt.loadNpmTasks('grunt-sorry-theme-deploy');
 
 _Run this task with the `grunt sorry-theme-deploy` command._
 
-Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide **or in some casses (such as page & host) be passed in as command line arguments**.
+Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide.
+
+**Some options such as 'page' and 'host' may also be supplied as command line parameters.**
 
 ### Overview
 
@@ -54,7 +56,7 @@ Type: `String`
 
 This is the password to match your username/email address.
 
-#### options.page or `--sory-page`
+#### options.page or `--sorry-page`
 Type: `String`
 
 The ID of the page to which you wish to deploy your theme. You can find this in the address bar of your Sorry account when viewing your page. i.e. a URL of `http://app.sorryapp.com/pages/my-page` means your page ID is `my-page`.
@@ -65,19 +67,19 @@ The ID of the page to which you wish to deploy your theme. You can find this in 
 Type: `String`
 Default Value: `/dist/theme.zip`
 
-This is the location in which we'll store the bundled version of your theme before uploading it.
+This is the location (relative to the Gruntfile) in which we'll store the bundled version of your theme before uploading it.
 
 ### Options (For The Sorry Development Team)
 
-#### options.host or `--sory-host`
+#### options.host or `--sorry-host`
 Type: `String`
 Default Value: `https://api.sorryapp.com`
 
-This is only applicable to Sorry development staff who wish to point the script at development and staging servers instead of the production endpoint.
+This is only applicable to Sorry development staff who wish to point the script at development and staging endpoints.
 
 ### Usage Example
 
-#### Configuring The Task
+#### Configure The Task
 
 We need somewhere to keep your Sorry login credentials. In the root of your project create a file called `sorry.json` which contains your username and password. **You should never check your Sorry credentials in to version control! Load them from an external file like this, which is outside of the repo or excluded by .gitignore.**
 
@@ -97,13 +99,13 @@ grunt.initConfig({
     // NOTE: NEVER CHECK YOUR CREDENTIALS INTO YOUR REPOSITORY.
     sorry: grunt.file.readJSON('sorry.json'),
 
-    // Configuration to be run (and then tested).
+    // Configuration to be run.
     sorry_theme_deploy: {
       options: {
         username: '<%= sorry.username %>',
         password: '<%= sorry.password %>'
       },     
-      your_target: {
+      theme: {
         expand: true,
         cwd: 'src/',
         src: ['**/*']
@@ -115,7 +117,7 @@ grunt.initConfig({
 
 You can also see from this config that we define the themes files as being in a directory named `src`. These files could be anywhere you like, but we always recommend this as a sensible default.
 
-#### Running The Task
+#### Run The Task
 
 Now your options are configured you can deploy your theme to your chosen page. Whist you can define your target page in the configuration, to give you flexibility we suggest using the command line argument `--sorry-page`
 

@@ -1,6 +1,6 @@
 # grunt-sorry-theme-deploy
 
-> A grunt task to automate the deployment of your status page themes to your Sorry account.
+> A grunt task to automate the deployment of your status page themes to your [Sorry](http://www.sorryapp.com/) account.
 >
 > This task takes your themes source code, bundles it up into a deployable zip and uploads it to your status page through the Sorry API.
 

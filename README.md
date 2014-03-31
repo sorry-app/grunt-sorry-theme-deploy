@@ -21,7 +21,12 @@ grunt.loadNpmTasks('grunt-sorry-theme-deploy');
 
 ## The "sorry_theme_deploy" task
 
+_Run this task with the `grunt sorry-theme-deploy` command._
+
+Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide **or in some casses (such as page & host) be passed in as command line arguments**.
+
 ### Overview
+
 In your project's Gruntfile, add a section named `sorry_theme_deploy` to the data object passed into `grunt.initConfig()`.
 
 ```js
@@ -49,7 +54,7 @@ Type: `String`
 
 This is the password to match your username/email address.
 
-#### options.page
+#### options.page or `--sory-page`
 Type: `String`
 
 This is ID of the page to which you wish to deploy your theme. You can find this in the address bar of your Sorry account when viewing your page. i.e. a URL of `http://app.sorryapp.com/pages/my-page` means your page ID is `my-page`.
@@ -62,15 +67,15 @@ Default Value: `/dist/theme.zip`
 
 This is the location in which we'll store the bundled version of your theme before uploading it.
 
-#### options.host
+#### options.host or `--sory-host`
 Type: `String`
 Default Value: `https://api.sorryapp.com`
 
 This is only applicable to Sorry development staff who wish to point the script at development and staging servers instead of the production endpoint.
 
-### Usage Examples
+### Usage Example
 
-#### Default Options
+#### Configuration
 
 This example demonstrates loading your Sorry login details from another file, Where `sorry.json` is just a json key:value file like package.json.
 
@@ -100,6 +105,12 @@ grunt.initConfig({
 ```
 
 You can also see from this config that we define the themes files as being in a directory named `src`. These files could be anywhere you like, but we always recommend this as a sensible default.
+
+#### Running The Task
+
+Now your options are configured your can deploy your theme to your chosen page. Whist you can put your page into the configuration above, to allow you to deploy to multiple pages we suggest using the command line argument `--sorry-page`
+
+`grunt sorry-theme-deploy --sorry-page=my-page`
 
 ### Alternative ways of including your Sorry credentials
 

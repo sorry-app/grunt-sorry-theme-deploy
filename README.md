@@ -67,6 +67,8 @@ Default Value: `/dist/theme.zip`
 
 This is the location in which we'll store the bundled version of your theme before uploading it.
 
+### Options (For The Sorry Development Team)
+
 #### options.host or `--sory-host`
 Type: `String`
 Default Value: `https://api.sorryapp.com`
@@ -75,11 +77,18 @@ This is only applicable to Sorry development staff who wish to point the script 
 
 ### Usage Example
 
-#### Configuration
+#### Configuring The Task
 
-This example demonstrates loading your Sorry login details from another file, Where `sorry.json` is just a json key:value file like package.json.
+We need somewhere to keep your Sorry login credentials. In the root of your project create a file called `sorry.json` which contains your username and password. **You should never check your Sorry credentials in to version control! Load them from an external file like this, which is outside of the repo or excluded by .gitignore.**
 
-**This is important because you should never check your Sorry credentials in to version control! Load them from an external file that is outside of the repo or excluded by .gitignore.**
+```json
+{
+  "username": "your email address goes here",
+  "password": "your password goes here"
+}
+```
+
+Now you can configure your grunt task, loading your Sorry login details the from external file you created above.
 
 ```js
 grunt.initConfig({
@@ -108,7 +117,7 @@ You can also see from this config that we define the themes files as being in a 
 
 #### Running The Task
 
-Now your options are configured your can deploy your theme to your chosen page. Whist you can put your page into the configuration above, to allow you to deploy to multiple pages we suggest using the command line argument `--sorry-page`
+Now your options are configured you can deploy your theme to your chosen page. Whist you can put your page into the configuration above, to allow you to deploy to multiple pages we suggest using the command line argument `--sorry-page`
 
 `grunt sorry-theme-deploy --sorry-page=my-page`
 

@@ -134,6 +134,8 @@ If you do not pass in a **username** and **password** with your config, `grunt-s
 
 In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
+**Once you are happy that your contribution is ready for production please send us a pull request**, at which point we'll review the code and merge it in.
+
 ## Versioning
 
 For transparency and insight into our release cycle, and for striving to maintain backward compatibility, This project will be maintained under the Semantic Versioning guidelines as much as possible.

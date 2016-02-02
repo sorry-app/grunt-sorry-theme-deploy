@@ -35,8 +35,7 @@ module.exports = function(grunt) {
     // Configuration to be run (and then tested).
     sorry_theme_deploy: {
       options: {
-        username: '<%= sorry.username %>',
-        password: '<%= sorry.password %>'
+        accessToken: '<%= sorry.accessToken %>'
       },
       valid_theme: {
         expand: true,

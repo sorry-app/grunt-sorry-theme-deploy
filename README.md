@@ -46,15 +46,10 @@ grunt.initConfig({
 
 ### Options (Required)
 
-#### options.username
+#### options.accessToken
 Type: `String`
 
-This is your username/email address which you have registered to your Sorry account.
-
-#### options.password
-Type: `String`
-
-This is the password to match your username/email address.
+This is your API Token which is available from within your Sorry account.
 
 #### options.page or `--sorry-page`
 Type: `String`
@@ -81,12 +76,11 @@ This is only applicable to Sorry development staff who wish to point the script 
 
 #### Configure The Task
 
-We need somewhere to keep your Sorry login credentials. In the root of your project create a file called `sorry.json` which contains your username and password. **You should never check your Sorry credentials in to version control! Load them from an external file like this, which is outside of the repo or excluded by .gitignore.**
+We need somewhere to keep your Sorry login credentials. In the root of your project create a file called `sorry.json` which contains your access token. **You should never check your Sorry credentials in to version control! Load them from an external file like this, which is outside of the repo or excluded by .gitignore.**
 
 ```json
 {
-  "username": "your email address goes here",
-  "password": "your password goes here"
+  "accessToken": "your access token goes here"
 }
 ```
 
@@ -102,8 +96,7 @@ grunt.initConfig({
     // Configuration to be run.
     sorry_theme_deploy: {
       options: {
-        username: '<%= sorry.username %>',
-        password: '<%= sorry.password %>'
+        accessToken: '<%= sorry.accessToken %>'
       },     
       theme: {
         expand: true,
@@ -129,10 +122,9 @@ grunt sorry-theme-deploy --sorry-page=my-page
 
 #### Environment variables
 
-If you do not pass in a **username** and **password** with your config, `grunt-sorry-theme-deploy` will fallback to the following environment variables:
+If you do not pass in an **accessToken** with your config, `grunt-sorry-theme-deploy` will fallback to the following environment variables:
 
-* `SORRY_USERNAME`
-* `SORRY_PASSWORD`
+* `SORRY_ACCESSTOKEN`
 
 ## Contributing
 

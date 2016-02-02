@@ -19,8 +19,7 @@ exports.init = function (grunt, options) {
         method: 'PUT',
         multipart: true,
         parser: rest.parsers.json,
-        username: options.username,
-        password: options.password,
+        accessToken: options.accessToken,
 
         // Data for the request.
         data: {

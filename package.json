@@ -42,6 +42,6 @@
   "dependencies": {
     "temporary": "0.0.8",
     "archiver": "^0.6.1",
-    "restler": "^3.2.0"
+    "restler": "^3.4.0"
   }
 }

@@ -4,3 +4,4 @@ tmp
 sorry.json
 .DS_Store
 dist
+package-lock.json

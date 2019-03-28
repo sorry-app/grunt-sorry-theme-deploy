@@ -30,8 +30,7 @@
     "grunt": "~0.4.4",
     "grunt-contrib-clean": "~0.4.0",
     "grunt-contrib-jshint": "~0.6.0",
-    "grunt-release": "^0.7.0",
-    "restler-base": "^3.4.6"
+    "grunt-release": "^0.7.0"
   },
   "peerDependencies": {
     "grunt": "~0.4.4"
@@ -41,6 +40,7 @@
   ],
   "dependencies": {
     "temporary": "0.0.8",
-    "archiver": "^0.6.1"
+    "archiver": "^0.6.1",
+    "restler-base": "^3.4.6"
   }
 }

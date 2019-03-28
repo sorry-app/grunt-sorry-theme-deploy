@@ -1,6 +1,6 @@
 // Filesystem and Restler http library.
 var fs = require('fs');
-var rest = require('restler');
+var rest = require('restler-base');
 
 // Initialize the uploader class.
 exports.init = function (grunt, options) {
